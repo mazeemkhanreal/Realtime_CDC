@@ -1,44 +1,34 @@
-name: Run Snowflake SQL Script
+name: Run Snowflake SQL Job
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main # or your default branch, e.g., master
+  workflow_dispatch: # Allows manual triggering from GitHub UI
 
 jobs:
-  run-sql:
+  run_sql_on_snowflake:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Install SnowSQL (tar.gz method)
-        run: |
-          curl -L -o snowsql.tar.gz https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.27-linux_x86_64.tar.gz
-          mkdir -p $HOME/snowsql
-          tar -xzf snowsql.tar.gz -C $HOME/snowsql --strip-components=1
-          echo "$HOME/snowsql/bin" >> $GITHUB_PATH
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9' # Or your preferred Python version
 
-      - name: Create Private Key File
-        run: |
-          echo "${{ secrets.SNOWSQL_PRIVATE_KEY }}" | sed 's/\\n/\n/g' > snowflake_rsa_key.pem
-          chmod 600 snowflake_rsa_key.pem
+    - name: Install Snowflake Connector
+      run: pip install snowflake-connector-python
 
-      - name: Run snowflake.sql script
-        env:
-          SNOWSQL_ACCOUNT: ${{ secrets.SNOWSQL_ACCOUNT }}
-          SNOWSQL_USER: ${{ secrets.SNOWSQL_USER }}
-          SNOWSQL_DATABASE: ${{ secrets.SNOWSQL_DATABASE }}
-          SNOWSQL_SCHEMA: ${{ secrets.SNOWSQL_SCHEMA }}
-          SNOWSQL_ROLE: ${{ secrets.SNOWSQL_ROLE }}
-          SNOWSQL_WAREHOUSE: ${{ secrets.SNOWSQL_WAREHOUSE }}
-        run: |
-          snowsql \
-            --accountname "$SNOWSQL_ACCOUNT" \
-            --username "$SNOWSQL_USER" \
-            --private-key-path snowflake_rsa_key.pem \
-            --dbname "$SNOWSQL_DATABASE" \
-            --schemaname "$SNOWSQL_SCHEMA" \
-            --rolename "$SNOWSQL_ROLE" \
-            --warehouse "$SNOWSQL_WAREHOUSE" \
-            -f snowflake.sql
+    - name: Run SQL on Snowflake
+      env:
+        SNOWSQL_ACCOUNT: ${{ secrets.SNOWSQL_ACCOUNT }}
+        SNOWSQL_DATABASE: ${{ secrets.SNOWSQL_DATABASE }}
+        SNOWSQL_PRIVATE_KEY: ${{ secrets.SNOWSQL_PRIVATE_KEY }}
+        SNOWSQL_ROLE: ${{ secrets.SNOWSQL_ROLE }}
+        SNOWSQL_SCHEMA: ${{ secrets.SNOWSQL_SCHEMA }}
+        SNOWSQL_USER: ${{ secrets.SNOWSQL_USER }}
+        SNOWSQL_WAREHOUSE: ${{ secrets.SNOWSQL_WAREHOUSE }}
+      run: python run_snowflake_sql.py postgres.sql
