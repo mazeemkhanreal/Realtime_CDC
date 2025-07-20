@@ -1,0 +1,42 @@
+name: Run Snowflake SQL Script
+
+on:
+  push:
+    branches: [main]  # Or use workflow_dispatch for manual trigger
+
+jobs:
+  run-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install SnowSQL
+        run: |
+          wget https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.21-linux_x86_64.bash
+          bash snowsql-1.2.21-linux_x86_64.bash
+
+      - name: Create Private Key File
+        run: |
+          echo "${{ secrets.SNOWSQL_PRIVATE_KEY }}" | sed 's/\\n/\n/g' > snowflake_rsa_key.pem
+          chmod 600 snowflake_rsa_key.pem
+
+      - name: Run snowflake.sql script
+        env:
+          SNOWSQL_ACCOUNT: ${{ secrets.SNOWSQL_ACCOUNT }}
+          SNOWSQL_USER: ${{ secrets.SNOWSQL_USER }}
+          SNOWSQL_DATABASE: ${{ secrets.SNOWSQL_DATABASE }}
+          SNOWSQL_SCHEMA: ${{ secrets.SNOWSQL_SCHEMA }}
+          SNOWSQL_ROLE: ${{ secrets.SNOWSQL_ROLE }}
+          SNOWSQL_WAREHOUSE: ${{ secrets.SNOWSQL_WAREHOUSE }}
+        run: |
+          ~/bin/snowsql \
+            --accountname $SNOWSQL_ACCOUNT \
+            --username $SNOWSQL_USER \
+            --private-key-path snowflake_rsa_key.pem \
+            --dbname $SNOWSQL_DATABASE \
+            --schemaname $SNOWSQL_SCHEMA \
+            --rolename $SNOWSQL_ROLE \
+            --warehouse $SNOWSQL_WAREHOUSE \
+            -f snowflake.sql
