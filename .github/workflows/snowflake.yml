@@ -31,4 +31,4 @@ jobs:
         SNOWSQL_SCHEMA: ${{ secrets.SNOWSQL_SCHEMA }}
         SNOWSQL_USER: ${{ secrets.SNOWSQL_USER }}
         SNOWSQL_WAREHOUSE: ${{ secrets.SNOWSQL_WAREHOUSE }}
-      run: python run_snowflake_sql.py postgres.sql
+      run: python run_snowflake_sql.py snowflake.sql
