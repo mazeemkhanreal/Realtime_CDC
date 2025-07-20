@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main # or your default branch, e.g., master
+    paths:
+      - 'snowflake.sql'
   workflow_dispatch: # Allows manual triggering from GitHub UI
 
 jobs:
