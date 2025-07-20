@@ -14,7 +14,7 @@ jobs:
 
       - name: Install SnowSQL (tar.gz method)
         run: |
-          curl -L -o snowsql.tar.gz https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.21-linux_x86_64.tar.gz
+          curl -L -o snowsql.tar.gz https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.27-linux_x86_64.tar.gz
           mkdir -p $HOME/snowsql
           tar -xzf snowsql.tar.gz -C $HOME/snowsql --strip-components=1
           echo "$HOME/snowsql/bin" >> $GITHUB_PATH
