@@ -2,7 +2,7 @@ name: Run Snowflake SQL Script
 
 on:
   push:
-    branches: [main]  # Or use workflow_dispatch for manual trigger
+    branches: [main]  # You can change to workflow_dispatch for manual run
 
 jobs:
   run-sql:
@@ -14,8 +14,10 @@ jobs:
 
       - name: Install SnowSQL
         run: |
-          wget https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.21-linux_x86_64.bash
-          bash snowsql-1.2.21-linux_x86_64.bash
+          curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.21-linux_x86_64.bash
+          chmod +x snowsql-1.2.21-linux_x86_64.bash
+          ./snowsql-1.2.21-linux_x86_64.bash -y --no-prompt
+          echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Create Private Key File
         run: |
@@ -32,11 +34,11 @@ jobs:
           SNOWSQL_WAREHOUSE: ${{ secrets.SNOWSQL_WAREHOUSE }}
         run: |
           ~/bin/snowsql \
-            --accountname $SNOWSQL_ACCOUNT \
-            --username $SNOWSQL_USER \
+            --accountname "$SNOWSQL_ACCOUNT" \
+            --username "$SNOWSQL_USER" \
             --private-key-path snowflake_rsa_key.pem \
-            --dbname $SNOWSQL_DATABASE \
-            --schemaname $SNOWSQL_SCHEMA \
-            --rolename $SNOWSQL_ROLE \
-            --warehouse $SNOWSQL_WAREHOUSE \
+            --dbname "$SNOWSQL_DATABASE" \
+            --schemaname "$SNOWSQL_SCHEMA" \
+            --rolename "$SNOWSQL_ROLE" \
+            --warehouse "$SNOWSQL_WAREHOUSE" \
             -f snowflake.sql
