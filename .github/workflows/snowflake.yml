@@ -2,7 +2,7 @@ name: Run Snowflake SQL Script
 
 on:
   push:
-    branches: [main]  # You can change to workflow_dispatch for manual run
+    branches: [main]
 
 jobs:
   run-sql:
@@ -12,12 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install SnowSQL
+      - name: Install SnowSQL (tar.gz method)
         run: |
-          curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.21-linux_x86_64.bash
-          chmod +x snowsql-1.2.21-linux_x86_64.bash
-          ./snowsql-1.2.21-linux_x86_64.bash -y --no-prompt
-          echo "$HOME/bin" >> $GITHUB_PATH
+          curl -L -o snowsql.tar.gz https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.21-linux_x86_64.tar.gz
+          mkdir -p $HOME/snowsql
+          tar -xzf snowsql.tar.gz -C $HOME/snowsql --strip-components=1
+          echo "$HOME/snowsql/bin" >> $GITHUB_PATH
 
       - name: Create Private Key File
         run: |
@@ -33,7 +33,7 @@ jobs:
           SNOWSQL_ROLE: ${{ secrets.SNOWSQL_ROLE }}
           SNOWSQL_WAREHOUSE: ${{ secrets.SNOWSQL_WAREHOUSE }}
         run: |
-          ~/bin/snowsql \
+          snowsql \
             --accountname "$SNOWSQL_ACCOUNT" \
             --username "$SNOWSQL_USER" \
             --private-key-path snowflake_rsa_key.pem \
