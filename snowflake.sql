@@ -1,8 +1,8 @@
 -- This is your postgres.sql file
 -- Add your SQL commands here. For example:
 
-USE DATABASE MY_DATABASE;
-USE SCHEMA MY_SCHEMA;
+USE DATABASE SNOWFLAKE_LEARNING_DB;
+USE SCHEMA PUBLIC;
 
 CREATE TABLE IF NOT EXISTS my_test_table (
     id INT,
