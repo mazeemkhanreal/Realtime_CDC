@@ -26,7 +26,7 @@ This project simulates such a system — starting from an external data source a
 The CDC pipeline consists of several key components:
 
 ### 🔄 1. Data Source – Flight API
-A live aviation API (e.g., OpenSky) continuously provides real-time flight data such as aircraft positions and statuses. This data simulates the operational system of a business (e.g., a booking system).
+A live aviation API (e.g., OpenSky) continuously provides real-time flight data such as aircraft positions and statuses. This data simulates the operational system of a business (e.g., a realtime flights data coming from sensors etc).
 
 ### 🗄️ 2. PostgreSQL
 The API ingests data into a transactional PostgreSQL database. It behaves like a source-of-truth OLTP system where inserts/updates/deletes occur frequently.
@@ -35,7 +35,7 @@ The API ingests data into a transactional PostgreSQL database. It behaves like a
 Debezium monitors the PostgreSQL write-ahead log (WAL) and captures row-level changes in real time. These changes are streamed into Kafka topics for further processing.
 
 ### 🔌 4. Kafka Connect + Snowflake Sink Connector
-Kafka Connect reads change records from Kafka topics and streams them into Snowflake using the official Snowflake Sink Connector. The data lands in analytical tables, ready for querying.
+Kafka Connect reads change records from Kafka topics and streams them into Snowflake using the official Snowpipe streaming. The data lands in analytical tables, ready for querying.
 
 ### 🧊 5. Snowflake
 Snowflake acts as the real-time analytical engine. As changes propagate from the source, Snowflake remains consistently up to date with the latest state of the operational data.
@@ -58,6 +58,14 @@ All relevant scripts (e.g., Snowflake DDLs, connectors) are managed via GitHub A
 | Containerization    | Docker Compose                    |
 | CI/CD               | GitHub Actions                    |
 
+> 💡 **Note:** While this project was implemented in a local environment to avoid cloud infrastructure costs, it can be fully migrated to **AWS** using managed services such as:
+>
+> - Amazon RDS (for PostgreSQL)
+> - Amazon MSK (Managed Kafka)
+> - Amazon ECS or EKS (for container orchestration)
+>
+> This architecture was intentionally built locally for educational and cost-efficiency purposes, but can be scaled easily to the cloud.
+
 ---
 
 ## How Data Flows
@@ -65,26 +73,24 @@ All relevant scripts (e.g., Snowflake DDLs, connectors) are managed via GitHub A
 1. External API pushes real-time flight data → PostgreSQL
 2. Debezium detects changes in PostgreSQL (insert/update/delete)
 3. Kafka receives CDC events from Debezium topics
-4. Kafka Connect streams data into Snowflake via Snowflake Sink Connector
-5. GitHub Actions ensures automated deployment of schema and connectors
+4. CDC events from Kafka topics are ingested into Snowflake in near real-time via Snowpipe Streaming
+5. GitHub Actions ensures automated deployment across
 6. Analysts can query real-time data in Snowflake for insights
 
 ---
 
 ## Real-World Applications
 
-- **Aviation Dashboards**: Real-time updates of flights, delays, or re-routes.
-- **E-commerce**: Track inventory, orders, or customer activity in real time.
-- **Banking**: Transaction auditing and fraud detection pipelines.
-- **Logistics**: Monitor shipments, fleet movement, and ETA predictions.
-
----
-
-## Diagram (CDC.svg)
-
-The diagram illustrates the full data pipeline, showing the movement of data and the roles of each component.
-
-> 🖼️ *If viewing on GitHub, scroll up to see the visual architecture diagram above.*
+- **Operational Analytics**: Monitor live business operations such as sales performance, customer activity, or system health to enable fast decision-making.
+- **Customer 360 Profiles**: Continuously update customer profiles by integrating real-time transaction, interaction, and behavioral data for personalized marketing and support.
+- **Fraud Detection & Compliance**: Analyze transactional data streams in near real-time to detect suspicious patterns, enforce compliance, and trigger alerts.
+- **Inventory and Supply Chain Management**: Track stock levels, supplier shipments, and warehouse logistics dynamically to optimize supply chain efficiency.
+- **Financial Services**: Real-time reconciliation, risk management, and trade analytics for banking, insurance, and investment firms.
+- **IoT and Sensor Data Integration**: Ingest device telemetry and sensor data for monitoring, predictive maintenance, or smart automation.
+- **Customer Support & Ticketing**: Update and analyze support tickets, service requests, and customer feedback in real time to improve responsiveness.
+- **Marketing & Campaign Analytics**: Measure campaign performance, website clicks, and user engagement live to optimize ad spend and targeting.
+- **Healthcare Monitoring**: Integrate patient vitals, lab results, and appointment data for real-time monitoring and decision support.
+- **Telecommunications**: Monitor call records, network events, and user sessions continuously for quality assurance and capacity planning.
 
 ---
 
@@ -92,13 +98,12 @@ The diagram illustrates the full data pipeline, showing the movement of data and
 
 - Add schema versioning and validation with Avro + Schema Registry  
 - Implement data quality checks before writing to Snowflake  
-- Build a lightweight dashboard using Streamlit or Superset  
-- Add monitoring/alerting via Prometheus + Grafana
+- Build a lightweight monitoring dashboard using Datadog or Power BI.  
 
 ---
 
 ## Author
 
 **Muhammad Azeem Khan**  
-Data Engineer | Automation Analyst  
-[Your LinkedIn] | [https://mazeemkhanreal.github.io/resume/] | [mazeemkhanq@gmail.com]
+Full Stack Data Engineer 
+[[LinkedIn](https://www.linkedin.com/in/mazeemkhanreal/)] | [[Website](https://mazeemkhanreal.github.io/resume/)] | [mazeemkhanq@gmail.com]
