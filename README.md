@@ -111,12 +111,12 @@ All relevant scripts (e.g., Snowflake DDLs, connectors) are managed via GitHub A
 ```bash
 curl -O https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/2.0.0/snowflake-kafka-connector-2.0.0.jar
 ```
-
+<br>
 <img width="471" height="285" alt="image" src="https://github.com/user-attachments/assets/1532f96a-b9f2-4a25-aeca-ae95cd6b2899" />
 
 
 4. Run the relevant postgresql pre requisite scripts
-
+<br>
 <img width="989" height="700" alt="image" src="https://github.com/user-attachments/assets/c4d59dc8-67dd-42c7-850b-5b57bb941368" />
 
 5. We can use debezium UI accessible on [[Debezium UI](http://localhost:8080/#app/)] to create new connector or we can do this via the API call
@@ -136,7 +136,7 @@ curl -X POST -H "Content-Type: application/json" --data '{
   }
 }' http://localhost:8093/connectors
 ```
-
+<br>
 <img width="1837" height="689" alt="image" src="https://github.com/user-attachments/assets/5d9c689c-7aeb-4e64-8736-f4c957313958" />
 
 
@@ -146,37 +146,35 @@ curl -X POST -H "Content-Type: application/json" \
 --data @snowflake_test_config.json \
 http://localhost:8093/connectors
 ```
-
+<br>
 
 <img width="1630" height="397" alt="image" src="https://github.com/user-attachments/assets/a3420cf7-4159-4c59-a7de-6946d2780bb1" />
 
 
 7. Run the dummy data producer python file.
-
+<br>
 <img width="1664" height="313" alt="image" src="https://github.com/user-attachments/assets/ec58cc4a-abfd-4b87-bf0a-32cc02cdd6b1" />
 
 
 On Confluent CC, We can observe kafka topics capturing postgresql data.
-
+<br>
 <img width="1526" height="811" alt="image" src="https://github.com/user-attachments/assets/0095161d-96ec-4954-875c-dfede90ac6ff" />
 
 
 Data in Postgres:
-
+<br>
 <img width="1422" height="399" alt="image" src="https://github.com/user-attachments/assets/ff4d705d-5ffb-4e11-8558-9574e59a3087" />
 
 
 Data in Snowflake:
+<br>
 
 <img width="1788" height="843" alt="image" src="https://github.com/user-attachments/assets/974002c2-b118-4408-834e-ca79ca21da49" />
 
 
 Data Latency Check:  
 
-<br><br>
-
-
-
+<br>
 
 <img width="1506" height="196" alt="image" src="https://github.com/user-attachments/assets/36d0d341-752d-4c56-82be-e001834c8b55" /> 
 
