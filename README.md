@@ -171,7 +171,7 @@ Data in Snowflake:
 <img width="1788" height="843" alt="image" src="https://github.com/user-attachments/assets/974002c2-b118-4408-834e-ca79ca21da49" />
 
 
-Data Latency Check:
+Data Latency Check:  
 
 
 
