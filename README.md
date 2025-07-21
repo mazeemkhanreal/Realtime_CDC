@@ -1,7 +1,5 @@
 # 🛰️ Real-time Change Data Capture (CDC) Pipeline
 
-![Architecture](./CDC.png)
-
 ## Overview
 
 This project demonstrates a **real-time Change Data Capture (CDC) pipeline** for ingesting and analyzing live flight data. It is designed to reflect a modern, production-grade data engineering stack that can handle high-velocity streaming data, preserve transactional consistency, and power downstream analytics in near real time.
@@ -9,6 +7,8 @@ This project demonstrates a **real-time Change Data Capture (CDC) pipeline** for
 The goal is to replicate changes happening in a **PostgreSQL** database — populated from a live **external API** — and stream those changes all the way into **Snowflake**, where analytical dashboards or BI tools can consume them.
 
 ---
+
+![Architecture](./CDC.png)
 
 ## Why This Project?
 
