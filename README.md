@@ -96,7 +96,7 @@ All relevant scripts (e.g., Snowflake DDLs, connectors) are managed via GitHub A
 
 ## Future Improvements
 
-- Add schema versioning and validation with Avro + Schema Registry
+- Add schema versioning and validation with Avro + Schema Registry to formalize data structures in snowflake
 - Add further github actions automation to enhance automated deployments across all services  
 - Implement data quality checks before writing to Snowflake  
 - Build a lightweight monitoring dashboard using Datadog or Power BI.  
@@ -153,9 +153,21 @@ http://localhost:8093/connectors
 <img width="1664" height="313" alt="image" src="https://github.com/user-attachments/assets/ec58cc4a-abfd-4b87-bf0a-32cc02cdd6b1" />
 
 
+On Confluent CC, We can observe kafka topics capturing postgresql data.
+<img width="1526" height="811" alt="image" src="https://github.com/user-attachments/assets/0095161d-96ec-4954-875c-dfede90ac6ff" />
+
+
 Data in Postgres:
 <img width="1422" height="399" alt="image" src="https://github.com/user-attachments/assets/ff4d705d-5ffb-4e11-8558-9574e59a3087" />
 
+
+Data in Snowflake:
+<img width="1788" height="843" alt="image" src="https://github.com/user-attachments/assets/974002c2-b118-4408-834e-ca79ca21da49" />
+
+
+Data Latency Check:
+<img width="1506" height="196" alt="image" src="https://github.com/user-attachments/assets/36d0d341-752d-4c56-82be-e001834c8b55" />
+The real-time data system exhibits a latency of approximately 9.51 seconds. While not instantaneous, this lag of around 9 seconds might be acceptable depending on the specific application's requirements, but it could still impact use cases demanding near-instantaneous data.
 
 ---
 
