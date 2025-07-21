@@ -1,6 +1,6 @@
 # 🛰️ Real-time Change Data Capture (CDC) Pipeline
 
-![Architecture](./CDC.svg)
+![Architecture](./CDC.png)
 
 ## Overview
 
