@@ -173,7 +173,7 @@ Data in Snowflake:
 
 Data Latency Check:  
 
-.<br><br>
+<br><br>
 
 
 
