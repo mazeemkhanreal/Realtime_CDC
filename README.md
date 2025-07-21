@@ -173,7 +173,12 @@ Data in Snowflake:
 
 Data Latency Check:
 
-<img width="1506" height="196" alt="image" src="https://github.com/user-attachments/assets/36d0d341-752d-4c56-82be-e001834c8b55" /> <br>
+<img width="1506" height="196" alt="image" src="https://github.com/user-attachments/assets/36d0d341-752d-4c56-82be-e001834c8b55" /> 
+
+
+
+
+
 
 The real-time data system exhibits a latency of approximately 9.51 seconds. While not instantaneous, this lag of around 9 seconds might be acceptable depending on the specific application's requirements, but it could still impact use cases demanding near-instantaneous data.
 
