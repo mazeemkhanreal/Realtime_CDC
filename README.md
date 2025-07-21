@@ -158,13 +158,19 @@ http://localhost:8093/connectors
 <br>
 
 On Confluent CC, We can observe kafka topics capturing postgresql data.
+
 <br>
+
 <img width="1526" height="811" alt="image" src="https://github.com/user-attachments/assets/0095161d-96ec-4954-875c-dfede90ac6ff" />
+
 <br>
 
 Data in Postgres:
+
 <br>
+
 <img width="1422" height="399" alt="image" src="https://github.com/user-attachments/assets/ff4d705d-5ffb-4e11-8558-9574e59a3087" />
+
 <br>
 
 Data in Snowflake:
