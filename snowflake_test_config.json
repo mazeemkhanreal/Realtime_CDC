@@ -1,0 +1,23 @@
+{
+  "name": "snowflake-test-connector",
+  "config": {
+    "connector.class": "com.snowflake.kafka.connector.SnowflakeSinkConnector",
+    "tasks.max": "1",
+    "topics": "cdc.public.flights",
+    "snowflake.url.name": "acddgjc-fj86956.snowflakecomputing.com",
+    "snowflake.user.name": "kafka_connector_user",
+    "snowflake.private.key": "-----BEGIN PRIVATE KEY-----X-----END PRIVATE KEY-----",
+    "snowflake.database.name": "FLIGHTS",
+    "snowflake.schema.name": "PUBLIC",
+    "snowflake.role.name": "KAFKA_CONNECTOR_ROLE",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "snowflake.topic2table.map": "cdc.public.flights.test_topic:flights",
+    "errors.tolerance": "all",
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "snowflake.ingestion.method": "SNOWPIPE_STREAMING"
+  }
+}
